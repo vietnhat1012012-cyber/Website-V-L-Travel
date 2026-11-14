@@ -89,9 +89,9 @@ img{display:block;max-width:100%}
 
 /* Biểu tượng thôn */
 .pin{position:absolute;transform:translate(-50%,-100%);width:2px;height:2px;overflow:visible;z-index:1;background:none}
-.pin-inner{position:absolute;left:0;bottom:0;transform:translateX(-50%) scale(var(--inv));transform-origin:50% 100%;display:flex;flex-direction:column;align-items:center;
+.pin-inner{position:absolute;left:0;bottom:0;transform:translateX(-50%) scale(calc(var(--inv)*var(--ps,1)));transform-origin:50% 100%;display:flex;flex-direction:column;align-items:center;
   opacity:0;animation:pop .6s var(--ease) forwards;animation-delay:calc(var(--i)*110ms + 900ms)}
-@keyframes pop{from{opacity:0;transform:translateX(-50%) scale(calc(var(--inv)*.3)) translateY(-14px)}to{opacity:1;transform:translateX(-50%) scale(var(--inv))}}
+@keyframes pop{from{opacity:0;transform:translateX(-50%) scale(calc(var(--inv)*var(--ps,1)*.3)) translateY(-14px)}to{opacity:1;transform:translateX(-50%) scale(calc(var(--inv)*var(--ps,1)))}}
 .pin:hover,.pin.active{z-index:5}
 .pin-badge{position:relative;width:46px;height:58px;filter:drop-shadow(0 5px 6px rgba(6,53,45,.35));transition:transform .25s var(--ease);transform-origin:50% 100%}
 .pin:hover .pin-badge,.pin.active .pin-badge{transform:scale(1.14)}
@@ -246,6 +246,23 @@ body.has-logo .brand-text span{display:block;font-size:.85rem;font-weight:600;co
 @media (max-width:760px){ body.has-logo .brand-text span{display:block;font-size:.72rem} .top-actions{gap:6px} }
 .logo-slot.filled{overflow:hidden}.logo-slot.filled img{border-radius:inherit}
 
+/* ---------- Dòng ghi công ---------- */
+.credit{font-size:.72rem;line-height:1.4;text-align:center;letter-spacing:.01em;pointer-events:none}
+.credit-w{position:absolute;z-index:3;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));color:rgba(255,255,255,.82);text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.credit-m{position:absolute;z-index:11;left:70px;right:70px;bottom:max(6px,env(safe-area-inset-bottom));color:var(--green-800);opacity:.8}
+.map-hint{bottom:max(34px,calc(env(safe-area-inset-bottom) + 28px))}
+.credit-d{margin-top:26px;color:var(--ink-2)}
+@media (max-width:760px){ .credit-m{left:12px;right:12px;bottom:4px;font-size:.66rem} .map-hint{bottom:30px} }
+
+@media (max-width:760px){
+  .stage{--ps:.64}
+  .pin-label{font-size:1.02rem;white-space:normal;text-align:center;width:max-content;max-width:5.4em;line-height:1.15;padding:2px 6px}
+  .pin[data-id="thong-nhat"] .pin-label{transform:translate(-70%,6px)}
+  .pin[data-id="vu-lam"] .pin-label{transform:translate(-30%,6px)}
+  .pin[data-id="kha-ha"] .pin-label{top:auto;bottom:100%;transform:translate(-50%,-6px)}
+  .map-hint{bottom:44px}
+}
+
 </style>
 </head>
 <body>
@@ -305,6 +322,7 @@ body.has-logo .brand-text span{display:block;font-size:.85rem;font-weight:600;co
       <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>
     </button>
   </div>
+<p class="credit credit-w">Website được tạo bởi Nguyễn Việt Nhật, học sinh trường Tiểu học và Trung học cơ sở Chiến Thắng</p>
 </section>
 
 <!-- ================= 2. BẢN ĐỒ ================= -->
@@ -336,6 +354,7 @@ body.has-logo .brand-text span{display:block;font-size:.85rem;font-weight:600;co
     <button id="zOut" type="button" aria-label="Thu nhỏ"><svg class="ic"><use href="#i-minus"/></svg></button>
     <button id="zReset" type="button" aria-label="Về vị trí ban đầu"><svg class="ic"><use href="#i-reset"/></svg></button>
   </div>
+  <p class="credit credit-m">Website được tạo bởi Nguyễn Việt Nhật, học sinh trường Tiểu học và Trung học cơ sở Chiến Thắng</p>
   <p class="map-hint" id="mapHint">Chạm vào biểu tượng thôn để xem các điểm du lịch</p>
 
   <!-- Bảng thông tin thôn -->
@@ -1320,7 +1339,7 @@ window.VULE_DATA = {
       '<section class="d-sec" id="dirSec"><h2>Chỉ đường</h2><div class="dir"><p>' +
       (hasMap ? 'Mở Google Maps để chỉ đường đến <strong>' + esc(p.name) + '</strong>.' : esc(p.mapsMessage || 'Địa điểm này đang chờ bổ sung đường dẫn Google Maps.')) + '</p>' + dirBtn + '</div></section>' +
       '<div class="d-foot"><button class="nav-btn" type="button" data-act="back-village">' + icon('back') + 'Danh sách địa điểm trong thôn</button>' +
-      '<button class="nav-btn" type="button" data-act="back-map">' + icon('map') + 'Quay lại bản đồ</button></div></div>';
+      '<button class="nav-btn" type="button" data-act="back-map">' + icon('map') + 'Quay lại bản đồ</button></div><p class="credit credit-d">Website được tạo bởi Nguyễn Việt Nhật, học sinh trường Tiểu học và Trung học cơ sở Chiến Thắng</p></div>';
 
     detail.scrollTop = 0;
     $$('[data-act]', detail).forEach(function (el) {
